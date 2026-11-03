@@ -9,7 +9,12 @@ type Exportacoes = {
   nucleo_ler: () => number;
   nucleo_formatar: () => number;
   nucleo_repartir: (n: number) => number;
+  nucleo_horarios: () => number;
+  nucleo_colunas: (n: number) => number;
+  nucleo_conflitos: (ini: number, fim: number, n: number) => number;
 };
+
+const AGENDA_MAX = 128;
 
 let instancia: Exportacoes | null = null;
 
@@ -67,4 +72,37 @@ export function repartirDinheiro(total: number, pesos: number[]): number[] {
   pesos.forEach((p, i) => (numeros[1 + i] = BigInt(p)));
   if (n.nucleo_repartir(pesos.length) !== 0) throw new Error("Valores inválidos para repartir.");
   return Array.from(numeros.subarray(1, 1 + pesos.length), Number);
+}
+
+/** Intervalo em minutos inteiros (ex.: minutos desde 1970). Fim exclusivo. */
+export type Intervalo = { inicio: number; fim: number };
+
+function escreverHorarios(n: Exportacoes, lista: Intervalo[]): Int32Array {
+  if (lista.length > AGENDA_MAX) throw new Error(`No máximo ${AGENDA_MAX} horários.`);
+  const k = lista.length;
+  const memoria = new Int32Array(n.memory.buffer, n.nucleo_horarios(), 4 * AGENDA_MAX);
+  lista.forEach((h, i) => {
+    memoria[i] = h.inicio;
+    memoria[k + i] = h.fim;
+  });
+  return memoria;
+}
+
+/** Índices dos horários existentes que cruzam o novo. Só encostar não conta. */
+export function conflitosDeHorario(novo: Intervalo, existentes: Intervalo[]): number[] {
+  const n = nucleo();
+  const memoria = escreverHorarios(n, existentes);
+  const total = n.nucleo_conflitos(novo.inicio, novo.fim, existentes.length);
+  if (total < 0) throw new Error("Horário inválido.");
+  const k = existentes.length;
+  return Array.from(memoria.subarray(2 * k, 2 * k + total));
+}
+
+/** Coluna de cada atendimento e quantas colunas seu grupo usa, para encaixes lado a lado. */
+export function colunasDoDia(lista: Intervalo[]): { coluna: number; colunas: number }[] {
+  const n = nucleo();
+  const memoria = escreverHorarios(n, lista);
+  if (n.nucleo_colunas(lista.length) !== 0) throw new Error("Horário inválido.");
+  const k = lista.length;
+  return lista.map((_, i) => ({ coluna: memoria[2 * k + i], colunas: memoria[3 * k + i] }));
 }

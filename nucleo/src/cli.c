@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "agenda.h"
 #include "dinheiro.h"
 
 int main(void) {
@@ -40,6 +41,43 @@ int main(void) {
         printf("ok");
         for (size_t i = 0; i < n; i++) printf(" %lld", (long long)saida[i]);
         printf("\n");
+      }
+    } else if (strncmp(linha, "colunas ", 8) == 0 || strncmp(linha, "conflitos ", 10) == 0) {
+      /* colunas i1 f1 i2 f2 ...          -> ok c1/t1 c2/t2 ...
+         conflitos ni nf i1 f1 i2 f2 ...  -> ok <índices> */
+      int e_colunas = linha[2] == 'l';
+      char *p = linha + (e_colunas ? 8 : 10);
+      int32_t novo_ini = 0, novo_fim = 0;
+      if (!e_colunas) {
+        novo_ini = (int32_t)strtol(p, &p, 10);
+        novo_fim = (int32_t)strtol(p, &p, 10);
+      }
+      int32_t ini[AGENDA_MAX_ITENS], fim[AGENDA_MAX_ITENS], a[AGENDA_MAX_ITENS], b[AGENDA_MAX_ITENS];
+      size_t n = 0;
+      while (*p && n < AGENDA_MAX_ITENS) {
+        char *depois;
+        long i = strtol(p, &depois, 10);
+        if (depois == p) break;
+        long f = strtol(depois, &p, 10);
+        ini[n] = (int32_t)i;
+        fim[n] = (int32_t)f;
+        n++;
+      }
+      if (e_colunas) {
+        if (agenda_colunas(ini, fim, n, a, b) != 0) { printf("erro 2\n"); }
+        else {
+          printf("ok");
+          for (size_t i = 0; i < n; i++) printf(" %d/%d", (int)a[i], (int)b[i]);
+          printf("\n");
+        }
+      } else {
+        int total = agenda_conflitos(novo_ini, novo_fim, ini, fim, n, a);
+        if (total < 0) { printf("erro 2\n"); }
+        else {
+          printf("ok");
+          for (int i = 0; i < total; i++) printf(" %d", (int)a[i]);
+          printf("\n");
+        }
       }
     } else {
       printf("erro 99\n");

@@ -3,6 +3,7 @@
  * chama a função e lê a resposta em `nucleo_saida` / `nucleo_numeros`.
  * Sem malloc: buffers fixos, uma chamada por vez.
  */
+#include "agenda.h"
 #include "dinheiro.h"
 
 #define EXPORTA(nome) __attribute__((export_name(#nome)))
@@ -35,6 +36,25 @@ EXPORTA(nucleo_repartir) int nucleo_repartir(int n) {
     for (int i = 0; i < n; i++) numeros[1 + i] = resposta[i];
   }
   return (int)e;
+}
+
+/* Agenda: [0..n) inícios, [n..2n) fins, [2n..3n) e [3n..4n) respostas. */
+static int32_t horarios[4 * AGENDA_MAX_ITENS];
+
+EXPORTA(nucleo_horarios) int32_t *nucleo_horarios(void) { return horarios; }
+
+/* Colunas lado a lado: grava coluna em [2n..3n) e total de colunas em [3n..4n). */
+EXPORTA(nucleo_colunas) int nucleo_colunas(int n) {
+  if (n < 0 || n > AGENDA_MAX_ITENS) return -1;
+  size_t k = (size_t)n;
+  return agenda_colunas(horarios, horarios + k, k, horarios + 2 * k, horarios + 3 * k);
+}
+
+/* Conflitos do novo horário com os n existentes; índices voltam em [2n..). Devolve quantos. */
+EXPORTA(nucleo_conflitos) int nucleo_conflitos(int32_t novo_ini, int32_t novo_fim, int n) {
+  if (n < 0 || n > AGENDA_MAX_ITENS) return -1;
+  size_t k = (size_t)n;
+  return agenda_conflitos(novo_ini, novo_fim, horarios, horarios + k, k, horarios + 2 * k);
 }
 
 /* O otimizador às vezes troca laços por estas funções da libc; aqui não há libc. */
