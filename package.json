@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prebuild": "node scripts/carimbo-nucleo.mjs conferir",
+    "verificar": "npm run type-check && npm run lint && npm run build && make -C nucleo test && cd ferramentas && uv run ruff check . && uv run pytest -q"
   },
   "dependencies": {
     "@date-fns/tz": "^1.5.0",

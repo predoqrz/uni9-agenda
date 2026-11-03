@@ -40,3 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 !.env.example
+
+# núcleo C e ferramentas Python
+/nucleo/bin/
+/ferramentas/.venv/
+__pycache__/
+.hypothesis/
+.pytest_cache/
+.ruff_cache/

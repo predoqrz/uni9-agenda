@@ -1,0 +1,26 @@
+[project]
+name = "uni9-ferramentas"
+version = "0.1.0"
+description = "Ferramentas de linha de comando do UNI9-AGENDA"
+requires-python = ">=3.12"
+dependencies = [
+  "httpx>=0.27",
+  "openpyxl>=3.1",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "hypothesis>=6.100",
+  "ruff>=0.6",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["testes_cruzados"]
