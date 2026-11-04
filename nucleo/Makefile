@@ -5,8 +5,8 @@
 CC ?= clang
 WASM_CC ?= clang
 CFLAGS = -std=c11 -Wall -Wextra -Werror -pedantic -Iinclude
-FONTES = src/dinheiro.c src/agenda.c
-CABECALHOS = include/dinheiro.h include/agenda.h
+FONTES = src/dinheiro.c src/agenda.c src/recorrencia.c
+CABECALHOS = include/dinheiro.h include/agenda.h include/recorrencia.h
 EXE = $(if $(filter Windows_NT,$(OS)),.exe,)
 DESTINO_WASM = ../src/lib/nucleo/nucleo.wasm
 # Biblioteca compartilhada para o Python (ctypes)
@@ -28,9 +28,14 @@ bin/teste_agenda$(EXE): $(FONTES) testes/teste_agenda.c $(CABECALHOS)
 	@mkdir -p bin
 	$(CC) $(CFLAGS) -g -fsanitize=address,undefined -fno-sanitize-recover=all $(FONTES) testes/teste_agenda.c -o $@
 
-test: bin/teste_dinheiro$(EXE) bin/teste_agenda$(EXE)
+bin/teste_recorrencia$(EXE): $(FONTES) testes/teste_recorrencia.c $(CABECALHOS)
+	@mkdir -p bin
+	$(CC) $(CFLAGS) -g -fsanitize=address,undefined -fno-sanitize-recover=all $(FONTES) testes/teste_recorrencia.c -o $@
+
+test: bin/teste_dinheiro$(EXE) bin/teste_agenda$(EXE) bin/teste_recorrencia$(EXE)
 	./bin/teste_dinheiro$(EXE)
 	./bin/teste_agenda$(EXE)
+	./bin/teste_recorrencia$(EXE)
 
 wasm: $(FONTES) src/wasm.c $(CABECALHOS)
 	@mkdir -p $(dir $(DESTINO_WASM))

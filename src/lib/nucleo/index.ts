@@ -12,6 +12,7 @@ type Exportacoes = {
   nucleo_horarios: () => number;
   nucleo_colunas: (n: number) => number;
   nucleo_conflitos: (ini: number, fim: number, n: number) => number;
+  nucleo_vencimento: (ano: number, mes: number, dia: number) => number;
 };
 
 const AGENDA_MAX = 128;
@@ -105,4 +106,11 @@ export function colunasDoDia(lista: Intervalo[]): { coluna: number; colunas: num
   if (n.nucleo_colunas(lista.length) !== 0) throw new Error("Horário inválido.");
   const k = lista.length;
   return lista.map((_, i) => ({ coluna: memoria[2 * k + i], colunas: memoria[3 * k + i] }));
+}
+
+/** Dia em que a conta fixa de "todo dia `dia`" cai no mês: dia 31 vira o último dia nos meses curtos. */
+export function diaDeVencimento(ano: number, mes: number, dia: number): number {
+  const r = nucleo().nucleo_vencimento(ano, mes, dia);
+  if (r === 0) throw new Error("Data de vencimento inválida.");
+  return r;
 }

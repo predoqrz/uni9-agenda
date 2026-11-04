@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CalendarDays, Menu, Scissors, Users, X } from "lucide-react";
+import { CalendarDays, Menu, Scissors, Users, Wallet, X } from "lucide-react";
 import { sair } from "@/app/login/acoes";
 
 const ITENS = [
   { href: "/agenda", rotulo: "Agenda", Icone: CalendarDays },
   { href: "/clientes", rotulo: "Clientes", Icone: Users },
   { href: "/servicos", rotulo: "Serviços", Icone: Scissors },
+  { href: "/caixa", rotulo: "Caixa", Icone: Wallet },
 ];
 
 /** Barra fina no topo com ☰ que abre o menu lateral pela esquerda. */

@@ -1,7 +1,7 @@
 // Mesmo protocolo da CLI em C (nucleo/src/cli.c), mas passando pela camada
 // TypeScript + WebAssembly que o app usa. Usado pelos testes cruzados em Python.
 import { createInterface } from "node:readline";
-import { colunasDoDia, conflitosDeHorario, formatarDinheiro, lerDinheiro, repartirDinheiro } from "../src/lib/nucleo/index.ts";
+import { colunasDoDia, conflitosDeHorario, diaDeVencimento, formatarDinheiro, lerDinheiro, repartirDinheiro } from "../src/lib/nucleo/index.ts";
 
 const CODIGOS: Record<string, number> = {
   "Digite um valor.": 1,
@@ -33,6 +33,13 @@ for await (const linha of createInterface({ input: process.stdin })) {
       console.log(["ok", ...r].join(" "));
     } catch {
       console.log("erro 2");
+    }
+  } else if (linha.startsWith("vencimento ")) {
+    const [a, m, d] = linha.slice(11).trim().split(/\s+/).map(Number);
+    try {
+      console.log(`ok ${diaDeVencimento(a, m, d)}`);
+    } catch {
+      console.log("ok 0");
     }
   } else {
     console.log("erro 99");

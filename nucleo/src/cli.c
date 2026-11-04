@@ -10,9 +10,11 @@
 #include <string.h>
 #include "agenda.h"
 #include "dinheiro.h"
+#include "recorrencia.h"
 
 int main(void) {
   char linha[4096];
+  char *linha_resto;
   while (fgets(linha, sizeof linha, stdin)) {
     linha[strcspn(linha, "\r\n")] = '\0';
     if (strncmp(linha, "ler ", 4) == 0) {
@@ -79,6 +81,12 @@ int main(void) {
           printf("\n");
         }
       }
+    } else if (strncmp(linha, "vencimento ", 11) == 0) {
+      /* vencimento <ano> <mes> <dia> -> ok <dia> (0 = inválido) */
+      long a = strtol(linha + 11, &linha_resto, 10);
+      long m = strtol(linha_resto, &linha_resto, 10);
+      long d = strtol(linha_resto, NULL, 10);
+      printf("ok %d\n", (int)recorrencia_dia_vencimento((int32_t)a, (int32_t)m, (int32_t)d));
     } else {
       printf("erro 99\n");
     }

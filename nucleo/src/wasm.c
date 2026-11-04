@@ -5,6 +5,7 @@
  */
 #include "agenda.h"
 #include "dinheiro.h"
+#include "recorrencia.h"
 
 #define EXPORTA(nome) __attribute__((export_name(#nome)))
 
@@ -55,6 +56,11 @@ EXPORTA(nucleo_conflitos) int nucleo_conflitos(int32_t novo_ini, int32_t novo_fi
   if (n < 0 || n > AGENDA_MAX_ITENS) return -1;
   size_t k = (size_t)n;
   return agenda_conflitos(novo_ini, novo_fim, horarios, horarios + k, k, horarios + 2 * k);
+}
+
+/* Contas fixas: dia em que a conta cai no mês (0 = inválido). */
+EXPORTA(nucleo_vencimento) int32_t nucleo_vencimento(int32_t ano, int32_t mes, int32_t dia) {
+  return recorrencia_dia_vencimento(ano, mes, dia);
 }
 
 /* O otimizador às vezes troca laços por estas funções da libc; aqui não há libc. */
