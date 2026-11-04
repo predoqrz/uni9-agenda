@@ -58,9 +58,9 @@ export async function salvarCliente(
   }
 
   const supabase = await criarClienteServidor();
-  const { error } = id
-    ? await supabase.from("clientes").update(validado.data).eq("id", id)
-    : await supabase.from("clientes").insert(validado.data);
+  const { data, error } = id
+    ? await supabase.from("clientes").update(validado.data).eq("id", id).select("id").single()
+    : await supabase.from("clientes").insert(validado.data).select("id").single();
 
   if (error) {
     if (error.code === "23505") {
@@ -68,8 +68,9 @@ export async function salvarCliente(
     }
     return { erros: { geral: "Não deu para salvar agora. Tente de novo." }, valores };
   }
-  revalidatePath("/clientes");
-  redirect("/clientes");
+  revalidatePath("/clientes", "layout");
+  // Depois de salvar, abre a ficha da cliente.
+  redirect(`/clientes/${data.id}`);
 }
 
 export async function arquivarCliente(id: string) {
