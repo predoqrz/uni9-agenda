@@ -49,8 +49,7 @@ export function MenuPrincipal({ contador }: { contador?: ReactNode }) {
           {contador}
         </button>
         <span className="font-marca text-lg tracking-[0.06em]">
-          <span className="font-semibold">UNI9</span>
-          <span className="text-dourado-escuro">-AGENDA</span>
+          <span className="font-semibold">BPQ</span>
         </span>
       </header>
 
@@ -66,8 +65,7 @@ export function MenuPrincipal({ contador }: { contador?: ReactNode }) {
       >
         <div className="mb-6 flex items-center justify-between">
           <span className="font-marca text-lg tracking-[0.06em]">
-            <span className="font-semibold">UNI9</span>
-            <span className="text-dourado">-AGENDA</span>
+            <span className="font-semibold text-dourado">BPQ</span>
           </span>
           <button
             type="button"

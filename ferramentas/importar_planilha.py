@@ -1,4 +1,4 @@
-"""Importa clientes ou serviços de uma planilha antiga (.xlsx ou .csv) para o UNI9-AGENDA.
+"""Importa clientes ou serviços de uma planilha antiga (.xlsx ou .csv) para o BPQ.
 
 Por padrão só SIMULA: mostra o que entraria e o que seria pulado, sem gravar nada.
 Para gravar, rode de novo com --confirmar.
@@ -30,8 +30,8 @@ from typing import Any
 import httpx
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from uni9.nucleo import ErroDinheiro, ler_dinheiro  # noqa: E402
-from uni9.telefone import normalizar_telefone  # noqa: E402
+from bpq.nucleo import ErroDinheiro, ler_dinheiro  # noqa: E402
+from bpq.telefone import normalizar_telefone  # noqa: E402
 
 URL_PADRAO = "https://uqpnjgyxxtniqfxamfuj.supabase.co"
 CATEGORIAS = {"extensao_cilios", "design", "sobrancelhas", "cilios", "labios", "facial", "outros"}
@@ -228,7 +228,7 @@ class Supabase:
 def principal(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
         prog="importar_planilha.py",
-        description="Importa clientes ou serviços de uma planilha para o UNI9-AGENDA. Simula por padrão.",
+        description="Importa clientes ou serviços de uma planilha para o BPQ. Simula por padrão.",
     )
     p.add_argument("tipo", choices=["clientes", "servicos"], help="o que a planilha contém")
     p.add_argument("arquivo", type=Path, help="planilha .xlsx ou .csv")

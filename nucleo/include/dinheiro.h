@@ -1,6 +1,6 @@
-/* Regras de dinheiro do UNI9-AGENDA: tudo em centavos inteiros, nunca float. */
-#ifndef UNI9_DINHEIRO_H
-#define UNI9_DINHEIRO_H
+/* Regras de dinheiro do BPQ: tudo em centavos inteiros, nunca float. */
+#ifndef BPQ_DINHEIRO_H
+#define BPQ_DINHEIRO_H
 
 #include <stddef.h>
 #include <stdint.h>

@@ -1,7 +1,7 @@
 [project]
-name = "uni9-ferramentas"
+name = "bpq-ferramentas"
 version = "0.1.0"
-description = "Ferramentas de linha de comando do UNI9-AGENDA"
+description = "Ferramentas de linha de comando do BPQ"
 requires-python = ">=3.12"
 dependencies = [
   "httpx>=0.27",

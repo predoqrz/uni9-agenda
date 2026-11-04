@@ -6,9 +6,9 @@ const cinzel = Cinzel({ variable: "--font-cinzel", subsets: ["latin"], weight: [
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "UNI9-AGENDA",
+  title: "BPQ",
   description: "Agenda, clientes e caixa do studio",
-  appleWebApp: { capable: true, title: "UNI9-AGENDA", statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "BPQ", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {

@@ -6,13 +6,12 @@ export default function PaginaLogin() {
       <section className="flex flex-1 flex-col items-center justify-center px-6 pt-[max(3rem,env(safe-area-inset-top))] pb-10 text-center">
         <div
           aria-hidden
-          className="mb-5 grid size-16 place-items-center rounded-full border-[1.5px] border-dourado bg-preto font-marca text-[1.375rem] font-semibold tracking-[0.04em] text-dourado"
+          className="mb-5 grid size-16 place-items-center rounded-full border-[1.5px] border-dourado bg-preto font-marca text-[1.625rem] font-semibold text-dourado"
         >
-          U9
+          B
         </div>
         <h1 className="font-marca text-[2.125rem] leading-none tracking-[0.06em]">
-          <span className="font-semibold">UNI9</span>
-          <span className="text-dourado-escuro">-AGENDA</span>
+          <span className="font-semibold">BPQ</span>
         </h1>
         <p className="mt-3 text-sm text-secundario">Sua agenda, clientes e caixa</p>
       </section>

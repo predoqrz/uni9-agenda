@@ -1,4 +1,4 @@
-"""Acesso ao núcleo C (nucleo/bin/uni9.dll ou libuni9.so) via ctypes.
+"""Acesso ao núcleo C (nucleo/bin/bpq.dll ou libbpq.so) via ctypes.
 
 A regra de dinheiro mora no C; o Python não reimplementa, só chama.
 Compile antes com `make -C nucleo`.
@@ -29,7 +29,7 @@ class ErroDinheiro(ValueError):
 
 @cache
 def _biblioteca() -> ctypes.CDLL:
-    nome = "uni9.dll" if sys.platform == "win32" else "libuni9.so"
+    nome = "bpq.dll" if sys.platform == "win32" else "libbpq.so"
     caminho = PASTA_BIN / nome
     if not caminho.exists():
         raise RuntimeError(f"Não achei {caminho}. Rode `make -C nucleo` antes.")

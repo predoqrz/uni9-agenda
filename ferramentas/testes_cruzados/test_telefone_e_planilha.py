@@ -11,8 +11,8 @@ from hypothesis import given, settings
 from hypothesis import strategies as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from bpq.telefone import normalizar_telefone  # noqa: E402
 from importar_planilha import planejar_clientes, planejar_servicos  # noqa: E402
-from uni9.telefone import normalizar_telefone  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[2]
 

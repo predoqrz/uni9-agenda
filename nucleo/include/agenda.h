@@ -1,6 +1,6 @@
 /* Regras de horário da agenda. Tempos em minutos inteiros (ex.: minutos desde 1970). */
-#ifndef UNI9_AGENDA_H
-#define UNI9_AGENDA_H
+#ifndef BPQ_AGENDA_H
+#define BPQ_AGENDA_H
 
 #include <stddef.h>
 #include <stdint.h>

@@ -1,4 +1,4 @@
-# Núcleo C do UNI9-AGENDA.
+# Núcleo C do BPQ.
 #   make        -> CLI nativa em bin/ (usada pelos testes cruzados em Python)
 #   make test   -> testes em C com AddressSanitizer e UBSan
 #   make wasm   -> ../src/lib/nucleo/nucleo.wasm + carimbo de versão
@@ -10,13 +10,13 @@ CABECALHOS = include/dinheiro.h include/agenda.h include/recorrencia.h
 EXE = $(if $(filter Windows_NT,$(OS)),.exe,)
 DESTINO_WASM = ../src/lib/nucleo/nucleo.wasm
 # Biblioteca compartilhada para o Python (ctypes)
-LIB = $(if $(filter Windows_NT,$(OS)),bin/uni9.dll,bin/libuni9.so)
+LIB = $(if $(filter Windows_NT,$(OS)),bin/bpq.dll,bin/libbpq.so)
 
 .PHONY: all test wasm lib clean
 
-all: bin/uni9$(EXE) $(LIB)
+all: bin/bpq$(EXE) $(LIB)
 
-bin/uni9$(EXE): $(FONTES) src/cli.c $(CABECALHOS)
+bin/bpq$(EXE): $(FONTES) src/cli.c $(CABECALHOS)
 	@mkdir -p bin
 	$(CC) $(CFLAGS) -O2 $(FONTES) src/cli.c -o $@
 

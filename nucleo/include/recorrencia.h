@@ -1,6 +1,6 @@
 /* Contas fixas: em que dia do mês a conta cai. */
-#ifndef UNI9_RECORRENCIA_H
-#define UNI9_RECORRENCIA_H
+#ifndef BPQ_RECORRENCIA_H
+#define BPQ_RECORRENCIA_H
 
 #include <stdint.h>
 

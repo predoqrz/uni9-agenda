@@ -12,10 +12,10 @@ from hypothesis import given, settings
 from hypothesis import strategies as st
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from uni9.nucleo import ErroDinheiro, formatar_dinheiro, ler_dinheiro, repartir_dinheiro  # noqa: E402
+from bpq.nucleo import ErroDinheiro, formatar_dinheiro, ler_dinheiro, repartir_dinheiro  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[2]
-CLI_C = RAIZ / "nucleo" / "bin" / ("uni9.exe" if sys.platform == "win32" else "uni9")
+CLI_C = RAIZ / "nucleo" / "bin" / ("bpq.exe" if sys.platform == "win32" else "bpq")
 CLI_TS = RAIZ / "scripts" / "nucleo-ts.mts"
 
 
