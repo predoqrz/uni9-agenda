@@ -3,18 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CalendarDays, Menu, Scissors, Users, Wallet, X } from "lucide-react";
+import type { ReactNode } from "react";
+import { CalendarDays, ListChecks, Menu, MessageSquareText, Scissors, Users, Wallet, X } from "lucide-react";
 import { sair } from "@/app/login/acoes";
 
 const ITENS = [
   { href: "/agenda", rotulo: "Agenda", Icone: CalendarDays },
+  { href: "/checklist", rotulo: "Checklist", Icone: ListChecks },
   { href: "/clientes", rotulo: "Clientes", Icone: Users },
   { href: "/servicos", rotulo: "Serviços", Icone: Scissors },
   { href: "/caixa", rotulo: "Caixa", Icone: Wallet },
+  { href: "/mensagens", rotulo: "Mensagens", Icone: MessageSquareText },
 ];
 
 /** Barra fina no topo com ☰ que abre o menu lateral pela esquerda. */
-export function MenuPrincipal() {
+/** `contador` = pendências do Checklist, mostradas no próprio ☰. */
+export function MenuPrincipal({ contador }: { contador?: ReactNode }) {
   const [aberto, setAberto] = useState(false);
   const caminho = usePathname();
 
@@ -39,9 +43,10 @@ export function MenuPrincipal() {
           onClick={() => setAberto(true)}
           aria-label="Abrir menu"
           aria-expanded={aberto}
-          className="apertavel grid size-12 place-items-center rounded-xl hover:bg-superficie"
+          className="apertavel relative grid size-12 place-items-center rounded-xl hover:bg-superficie"
         >
           <Menu size={22} strokeWidth={1.75} />
+          {contador}
         </button>
         <span className="font-marca text-lg tracking-[0.06em]">
           <span className="font-semibold">UNI9</span>
